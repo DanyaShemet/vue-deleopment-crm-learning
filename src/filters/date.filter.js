@@ -1,5 +1,8 @@
+import store from '../store'
+
+
 export default function dateFilter(value,format = "date") {
-    console.log(value)
+    const options = {};
     if (format.includes('date')){
         options.day = '2-digit';
         options.month = 'long';
@@ -7,9 +10,10 @@ export default function dateFilter(value,format = "date") {
     }
     if (format.includes('time')){
         options.hour = '2-digit';
-        options.minutes = '2-digit';
-        options.seconds = '2-digit'
+        options.minute = '2-digit';
+        options.second = '2-digit'
     }
-    const options = {};
-    return new Intl.DateTimeFormat('ru-RU', options).format(new Date(value))
+
+    const locale = store.getters.info.locale || 'ru-RU'
+    return new Intl.DateTimeFormat(locale, options).format(new Date(value))
 }
